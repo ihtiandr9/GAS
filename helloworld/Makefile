@@ -1,4 +1,5 @@
-GCC=gcc 
+GCC=gcc
+CFLAGS= -no-pie -g
 RM=rm
 OBJ = hellomain.s.o
 BIN = hellomain
@@ -6,6 +7,6 @@ DIRSRC= .
 all: clean ${BIN}
 
 ${BIN}: ${DIRSRC}/hellomain.s
-	${GCC} -no-pie -g ${DIRSRC}/hellomain.s -o hellomain
+	${GCC} ${CFLAGS} ${DIRSRC}/hellomain.s -o hellomain
 clean:
 	${RM} -f ${OBJ} ${BIN} ${map} *.lst
