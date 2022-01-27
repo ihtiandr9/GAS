@@ -1,5 +1,5 @@
 GCC=gcc
-CFLAGS= -no-pie -g
+CFLAGS= -fomit-frame-pointer -no-pie -g
 RM=rm
 OBJ = hellomain.s.o
 BIN = hellomain
