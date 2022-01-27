@@ -8,13 +8,9 @@ main:
         mov	$message, %rdi      # address of string to output
         call    myfunc
 	pop	%rdi
-	xor	%rax,	%rax
+	xor	%rax,	%rax    # we want return code 0
 	pop	%rbp
 	ret
-        # exit(0)
-        xor     %rdi, %rdi              # we want return code 0
-        call    exit                         # invoke operating system to exit
-                                        # invoke operating system to exit
 
 myfunc:
         # write(1, message, 13)
