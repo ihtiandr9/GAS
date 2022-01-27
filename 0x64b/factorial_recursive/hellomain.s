@@ -61,7 +61,7 @@ ret1:
 	mov $1, %rax
 	jmp endif
 err_arg:
-	mov $-1, %rax
+	mov $0, %rax
 endif:
         leave
         ret
