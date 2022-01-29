@@ -14,7 +14,7 @@ main:
 
 myfunc:
         # write(1, message, 13)
-        sub	 $8, %rsp
+        sub	 $24, %rsp
         push	%rbp
         push	%rdi
         mov	%rdi, 16(%rsp)
@@ -27,7 +27,7 @@ myfunc:
         pop	%rdi
         xor	%rax,%rax
         pop	%rbp
-        add	$8, %rsp
+        add	$24, %rsp
         ret
 
 
