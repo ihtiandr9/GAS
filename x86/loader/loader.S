@@ -2,15 +2,15 @@
 .code32
 .list
 .globl call_loader
-.globl _astart
+.globl _start
 
-_astart:
+_start:
 	jmp start
 start:
 	xor	%eax, %eax
 	lea	aLoaderStarted, %eax
-	mov	%eax, %edi
-	mov	$1, %esi
+	mov	%eax, %esi
+	mov	$1, %edi
 	call	fputs
 	##println $aLoaderStarted
 exit:
