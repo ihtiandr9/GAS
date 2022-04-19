@@ -48,14 +48,19 @@ fact:
         mov     %rsp, %rbp
         sub	 $32, %rsp
         mov	%rdi, -8(%rbp)
+        mov	%rcx, -16(%rbp)
         mov	-8(%rbp), %rax
         cmp	$0, %rax
         jz	ret1
         jb	err_arg
-        dec	%rax
-        mov	%rax, %rdi
-        call	fact
-        mull	-8(%rbp)
+        mov	%rax,%rcx
+cycle1:
+        dec	%rcx
+        jz	end_counter
+        mull	%ecx
+        jmp	cycle1
+end_counter:
+	mov	-16(%rbp), %rcx
         jmp endif
 ret1:
 	mov $1, %rax
