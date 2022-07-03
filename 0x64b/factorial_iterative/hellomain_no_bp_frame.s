@@ -72,4 +72,4 @@ endif:
 message:
         .ascii  "Hello, world\n"
 fmt_fact:
-	.ascii "factorial is %d\0"
+	.ascii "factorial is %d\n"
