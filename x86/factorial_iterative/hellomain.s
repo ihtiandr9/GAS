@@ -5,39 +5,30 @@
 main:
 	push	%ebp
 	mov	%esp,	%ebp
-	sub	$32,	%esp
-	mov	%edi,	-8(%ebp)
-##        lea     message, %esi      # address of string to output
-        mov	$message, %edi      # address of string to output
-        call    print_str
-        mov	$4, %edi
+	lea     message, %eax		# eax => message
+        push	%eax
+	call    print_str
+        add	$4, %esp
+	mov	$4, %eax
+	push	%eax
         call	fact
-        mov	%eax, -16(%ebp)
-        mov	$fmt_fact, %edi
-        mov	-16(%ebp), %esi
-        xor	%eax, %eax
+        add	$4, %esp
+	push	%eax
+        lea	fmt_fact, %eax
+        push	%eax
         call	printf
 	leave
 	xor	%eax,	%eax
 	ret
 
-#        # exit(0)
-#        xor     %rdi, %rdi              # we want return code 0
-#        call    exit                         # invoke operating system to exit
-#                                        # invoke operating system to exit
-
 print_str:
         # write(1, message, 13)
         push	%ebp
         mov     %esp, %ebp
-        sub	 $32, %esp
-        mov	%edi, -8(%ebp)
-        mov	%esi, -16(%ebp)
-        mov	-8(%ebp),%eax
-        mov     $13, %edx
-        mov     %eax, %esi
-        mov     $1, %edi                # file handle 1 is stdout
-        xor	%eax,	%eax
+        push	$13
+        mov     8(%ebp), %eax
+        push	%eax
+	push	$1			# file handle 1 is stdout
         call    write                     # invoke operating system to do the write
         leave
         ret
@@ -46,28 +37,23 @@ fact:
         # write(1, message, 13)
         push	%ebp
         mov     %esp, %ebp
-        sub	 $32, %esp
-        mov	%edi, -8(%ebp)
-        mov	%ecx, -16(%ebp)
-        mov	-8(%ebp), %eax
-        cmp	$0, %eax
-        jz	ret1
-        jb	err_arg
+	mov	8(%ebp), %eax
+	cmp	$0, %eax
+        jz	ret1$
+        jb	err_arg$
         mov	%eax,%ecx
-cycle1:
+cycle1$:
         dec	%ecx
-        jz	end_counter
-        mulw	%cx
-        jmp	cycle1
-end_counter:
-	mov	-16(%ebp), %ecx
-        jmp endif
-ret1:
+        jz	endif$
+        mul	%ecx
+        jmp	cycle1$
+        jmp endif$
+ret1$:
 	mov $1, %eax
-	jmp endif
-err_arg:
+	jmp endif$
+err_arg$:
 	mov $0, %eax
-endif:
+endif$:
         leave
         ret
 
