@@ -3,66 +3,59 @@
 .global main
 
 main:
-	push	%rbp
-	mov	%rsp,	%rbp
-	sub	$32,	%rsp
-	mov	%rdi,	-8(%rbp)
-##        lea     message, %rsi      # address of string to output
-        mov	$message, %rdi      # address of string to output
+	push	%ebp
+	mov	%esp,	%ebp
+	# print_str(messsage)
+        lea     message, %eax		# eax => message
+	push	%eax
         call    print_str
-        mov	$4, %rdi
+        add	$4, %esp
+	push	$4
         call	fact
-        mov	%rax, -16(%rbp)
-        mov	$fmt_fact, %rdi
-        mov	-16(%rbp), %rsi
-        xor	%rax, %rax
-        call	printf
+	add	$4, %esp		# eax = factorial
+	
+	#  printf(fmt_fact, factorial)
+	push	%eax
+        lea	fmt_fact, %eax		# eax => fmt_fact
+	push	%eax
+	call	printf
+	
+	add	$8, %esp
 	leave
-	xor	%rax,	%rax
+	xor	%eax,	%eax
 	ret
-
-#        # exit(0)
-#        xor     %rdi, %rdi              # we want return code 0
-#        call    exit                         # invoke operating system to exit
-#                                        # invoke operating system to exit
 
 print_str:
         # write(1, message, 13)
-        push	%rbp
-        mov     %rsp, %rbp
-        sub	 $32, %rsp
-        mov	%rdi, -8(%rbp)
-        mov	%rsi, -16(%rbp)
-        mov	-8(%rbp),%rax
-        mov     $13, %rdx
-        mov     %rax, %rsi
-        mov     $1, %rdi                # file handle 1 is stdout
-        xor	%rax,	%rax
+        push	%ebp
+        mov     %esp, %ebp
+        mov	8(%ebp),%eax
+	push	$13
+	push	%eax
+	push	$1
         call    write                     # invoke operating system to do the write
         leave
         ret
 
 fact:
-        # write(1, message, 13)
-        push	%rbp
-        mov     %rsp, %rbp
-        sub	 $32, %rsp
-        mov	%rdi, -8(%rbp)
-        mov	-8(%rbp), %rax
-        cmp	$0, %rax
-        jz	ret1
-        jb	err_arg
-        dec	%rax
-        mov	%rax, %rdi
+        push	%ebp
+        mov     %esp, %ebp
+        sub	$16, %esp
+        mov	8(%ebp), %eax
+        cmp	$0, %eax
+        jz	ret1$
+        jb	err_arg$
+        dec	%eax
+	push	%eax
         call	fact
-        mull	-8(%rbp)
-        jmp endif
-ret1:
-	mov $1, %rax
-	jmp endif
-err_arg:
-	mov $0, %rax
-endif:
+        mull	8(%ebp)
+        jmp	endif$
+ret1$:
+	mov $1, %eax
+	jmp	endif$
+err_arg$:
+	mov $0, %eax
+endif$:
         leave
         ret
 
