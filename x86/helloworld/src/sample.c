@@ -1,4 +1,3 @@
-
 #include<unistd.h>
 
 int myfunc(char* msg){
