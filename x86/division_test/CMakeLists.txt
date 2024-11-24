@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.5)
 project(helloworld
        LANGUAGES ASM C)
 set(CMAKE_C_FLAGS "-m32 -no-pie -ggdb")
