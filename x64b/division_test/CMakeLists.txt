@@ -3,6 +3,7 @@ project(helloworld
        LANGUAGES ASM C)
 set(CMAKE_C_FLAGS "-ggdb")
 set(CMAKE_ASM_FLAGS "-ggdb")
+set(CMAKE_EXE_LINKER_FLAGS "-no-pie")
 add_executable(division_bytes division_bytes.S)
 add_executable(division_words division_words.S)
 add_executable(division_c division_c.c)
