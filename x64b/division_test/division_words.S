@@ -5,13 +5,13 @@
 main:
 	push	%rbp
 	mov	%rsp, %rbp
-	xor	%rsi, %rsi       # address of string to output
+	mov	$bytesa, %rsi       # address of string to output
 	mov	$0xffff, %rax
 	mov	$10, %rbx
 divide:	xor	%dx, %dx
 	div	%bx
 	or	$0x30,%dx
-	movw	%dx, bytesa(%esi)
+	movw	%dx, (%esi)
 	inc	%rsi
 	or	%ax, %ax
 	jnz	divide
