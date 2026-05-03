@@ -4,3 +4,4 @@ project(helloworld
 add_subdirectory(helloworld)
 add_subdirectory(factorial_iterative)
 add_subdirectory(factorial_recursive)
+add_subdirectory(division_test)

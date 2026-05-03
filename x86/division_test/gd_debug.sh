@@ -1,1 +1,1 @@
-gdb -q -tui -x gdb.cnf build/division_bytes
+gdb -q -tui -x gdb.cnf build/division_words
